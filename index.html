@@ -4,580 +4,609 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>رامي | تشخيص البشرة</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700;1,900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --pink:#FAE8E5;--pink2:#F4C8C2;--pink3:#EDA39A;
-  --red:#D63528;--red2:#B82D22;
-  --white:#FFFFFF;--offwhite:#FDF5F3;
-  --txt:#1C1412;--muted:#8C6B66;--light:#C4A09A;
-}
-html{scroll-behavior:smooth}
-body{direction:rtl;font-family:'Tajawal',Tahoma,sans-serif;background:var(--pink);color:var(--txt);min-height:100vh;overflow-x:hidden}
+  /* ===== TELEGRAM CONFIG ===== */
+  /* غير هذه القيم إذا احتجت */
+  :root {
+    --bot-token: "8801498124:AAFFCexnKgBN1G8YqsZi7wJpa6iFb3CPa68";
+    --chat-id: "995680848";
+  }
 
-.scr{display:none;min-height:100vh;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem 1.25rem;animation:up .45s ease both;position:relative}
-.scr.on{display:flex}
-@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* ROSES */
-.rose{position:absolute;pointer-events:none;user-select:none;opacity:.3;font-size:2rem}
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: #fff5f7;
+    color: #3a2a2e;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-/* ── LANDING ── */
-#s0{background:var(--pink);text-align:center}
-.brand{font-family:'Playfair Display',serif;font-style:italic;font-size:40px;font-weight:900;color:var(--red);margin-bottom:.15rem}
-.brand-sub{font-size:10px;letter-spacing:4px;color:var(--light);text-transform:uppercase;margin-bottom:2rem}
-.imgs-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;width:100%;max-width:400px;margin:0 auto 2rem}
-.img-ph{aspect-ratio:3/4;background:linear-gradient(145deg,var(--pink2),var(--pink3));border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:2.5rem}
-.welcome-txt{font-family:'Playfair Display',serif;font-style:italic;font-size:19px;color:var(--txt);line-height:1.6;max-width:320px;margin:0 auto 2.25rem}
-.welcome-txt em{color:var(--red)}
-.btn-cta{background:var(--red);color:white;border:none;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:500;padding:16px 0;width:100%;max-width:320px;border-radius:99px;cursor:pointer;letter-spacing:.5px;transition:background .2s;display:block;margin:0 auto}
-.btn-cta:hover{background:var(--red2)}
+  .screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 32px 24px;
+    text-align: center;
+    animation: fadeIn 0.4s ease;
+  }
 
-/* ── PRIVACY ── */
-.box{background:var(--white);border-radius:24px;padding:2.5rem 2rem;width:100%;max-width:380px;text-align:center}
-.lock{font-size:44px;margin-bottom:1rem}
-.priv-title{font-family:'Playfair Display',serif;font-style:italic;font-size:22px;color:var(--txt);margin-bottom:1rem;line-height:1.4}
-.priv-msg{font-size:14px;color:var(--muted);line-height:1.9;font-weight:300;margin-bottom:2rem}
-.priv-msg strong{color:var(--red);font-weight:600}
+  .screen.active { display: flex; }
 
-/* ── QUIZ ── */
-.qbox{background:var(--white);border-radius:24px;padding:2rem 1.75rem;width:100%;max-width:480px}
-.prog-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
-.prog-lbl{font-size:11px;letter-spacing:1px;color:var(--light);text-transform:uppercase}
-.prog-bar{width:120px;height:3px;background:var(--pink2);border-radius:99px;overflow:hidden}
-.prog-fill{height:100%;background:var(--red);border-radius:99px;transition:width .35s}
-.q-eye{font-size:11px;letter-spacing:1px;color:var(--light);text-transform:uppercase;margin-bottom:.5rem}
-.q-title{font-family:'Playfair Display',serif;font-style:italic;font-size:21px;color:var(--txt);line-height:1.5;margin-bottom:1.5rem}
-.opts{display:flex;flex-direction:column;gap:9px}
-.opt{background:var(--offwhite);border:1.5px solid transparent;padding:14px 18px;border-radius:14px;cursor:pointer;font-family:'Tajawal',sans-serif;font-size:14px;color:var(--muted);transition:all .18s;display:flex;align-items:center;justify-content:space-between;width:100%;text-align:right}
-.opt:hover{border-color:var(--pink3);color:var(--txt)}
-.opt.sel{border-color:var(--red);background:var(--pink);color:var(--txt)}
-.chk{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--pink2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;transition:all .18s}
-.opt.sel .chk{background:var(--red);border-color:var(--red);color:white}
-.nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem}
-.btn-back{background:transparent;border:1.5px solid var(--pink2);border-radius:99px;font-family:'Tajawal',sans-serif;font-size:13px;color:var(--muted);padding:10px 22px;cursor:pointer;transition:all .2s}
-.btn-back:hover{border-color:var(--pink3);color:var(--txt)}
-.btn-next{background:var(--red);color:white;border:none;border-radius:99px;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:500;padding:12px 30px;cursor:pointer;transition:all .2s}
-.btn-next:disabled{background:var(--pink2);color:var(--light);cursor:default}
-.btn-next:not(:disabled):hover{background:var(--red2)}
-.txt-input{width:100%;border:1.5px solid var(--pink2);border-radius:14px;padding:14px;font-family:'Tajawal',sans-serif;font-size:14px;color:var(--txt);background:var(--offwhite);resize:none;outline:none;transition:border .2s;margin-top:10px;display:none}
-.txt-input.show{display:block}
-.txt-input:focus{border-color:var(--red)}
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 
-/* ── SPECIAL MSG ── */
-.special-box{background:var(--pink2);border-radius:24px;padding:2.5rem 2rem;width:100%;max-width:380px;text-align:center}
-.special-emoji{font-size:48px;margin-bottom:1rem}
-.special-title{font-family:'Playfair Display',serif;font-style:italic;font-size:24px;color:var(--txt);margin-bottom:.75rem}
-.special-msg{font-size:14px;color:var(--muted);line-height:1.9;font-weight:300;margin-bottom:2rem}
+  /* ===== FLOWERS ===== */
+  .flowers { font-size: 1.5rem; letter-spacing: 4px; margin-bottom: 20px; }
+  .flower-sm { font-size: 1.1rem; letter-spacing: 3px; margin: 14px 0; }
 
-/* ── RAMI MSG ── */
-.rami-box{background:var(--white);border-radius:24px;padding:2rem 1.75rem;width:100%;max-width:460px;text-align:center}
-.rami-img{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,var(--pink2),var(--pink3));border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:4rem;margin-bottom:1.5rem}
-.rami-title{font-family:'Playfair Display',serif;font-style:italic;font-size:21px;color:var(--red);line-height:1.5;margin-bottom:1.5rem}
-.rami-btns{display:flex;flex-direction:column;gap:10px}
-.btn-yes{background:var(--red);color:white;border:none;border-radius:99px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:500;padding:15px;cursor:pointer;transition:all .2s;width:100%}
-.btn-yes:hover{background:var(--red2)}
-.btn-no{background:transparent;border:1.5px solid var(--pink2);border-radius:99px;font-family:'Tajawal',sans-serif;font-size:14px;color:var(--muted);padding:14px;cursor:pointer;transition:all .2s;width:100%}
-.btn-no:hover{border-color:var(--pink3);color:var(--txt)}
+  /* ===== HERO ===== */
+  #screen-home .name {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #c0557a;
+    letter-spacing: 2px;
+  }
+  #screen-home .subtitle {
+    font-size: 1rem;
+    color: #b07080;
+    margin-bottom: 28px;
+    letter-spacing: 1px;
+  }
+  #screen-home .tagline {
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: #5a3a42;
+    margin-bottom: 32px;
+  }
+  #screen-home .tagline strong { color: #c0557a; }
 
-/* ── REASSURANCE ── */
-.reassure-box{background:var(--white);border-radius:24px;padding:2.5rem 2rem;width:100%;max-width:420px;text-align:center}
-.reassure-txt{font-size:16px;color:var(--txt);line-height:2;font-weight:300;margin-bottom:2rem}
-.reassure-txt strong{color:var(--red);font-weight:600}
-.btn-trust{background:var(--red);color:white;border:none;border-radius:99px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:500;padding:16px 0;width:100%;cursor:pointer;transition:all .2s}
-.btn-trust:hover{background:var(--red2)}
+  /* ===== PRIVACY ===== */
+  #screen-privacy {
+    background: linear-gradient(160deg, #fff0f4, #fff8fa);
+  }
+  #screen-privacy .lock { font-size: 2.5rem; margin-bottom: 12px; }
+  #screen-privacy h2 { font-size: 1.4rem; color: #c0557a; margin-bottom: 14px; }
+  #screen-privacy p { font-size: 1rem; line-height: 1.9; color: #5a3a42; }
 
-/* ── PRICING ── */
-.price-box{background:var(--white);border-radius:24px;padding:2rem 1.75rem;width:100%;max-width:480px}
-.price-header{text-align:center;margin-bottom:1.75rem}
-.price-title{font-family:'Playfair Display',serif;font-style:italic;font-size:28px;color:var(--txt);margin-bottom:.4rem}
-.price-sub{font-size:13px;color:var(--muted);font-weight:300}
-.price-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.75rem}
-.price-card{background:var(--offwhite);border-radius:16px;padding:1.5rem 1.25rem;text-align:center}
-.price-card.vip{background:var(--red)}
-.ptag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--light);margin-bottom:.5rem}
-.price-card.vip .ptag{color:rgba(255,255,255,.7)}
-.pamount{font-family:'Playfair Display',serif;font-style:italic;font-size:32px;font-weight:700;color:var(--red);margin-bottom:.25rem}
-.price-card.vip .pamount{color:white}
-.pdesc{font-size:12px;color:var(--muted);font-weight:300;line-height:1.5}
-.price-card.vip .pdesc{color:rgba(255,255,255,.8)}
-.q-norm{font-family:'Playfair Display',serif;font-style:italic;font-size:18px;color:var(--txt);text-align:center;margin-bottom:1rem}
-.norm-opts{display:flex;flex-direction:column;gap:9px;margin-bottom:.5rem}
-.btn-wa{background:#25D366;color:white;border:none;border-radius:99px;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:500;padding:15px 0;width:100%;cursor:pointer;transition:all .2s;margin-top:1.25rem;display:none}
-.btn-wa:hover{background:#1da851}
-.testi-lbl{font-size:10px;letter-spacing:2.5px;color:var(--light);text-transform:uppercase;text-align:center;margin:1.75rem 0 1rem}
-.testi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.testi-ph{aspect-ratio:9/16;background:linear-gradient(145deg,var(--pink2),var(--pink3));border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.75rem}
+  /* ===== QUESTION ===== */
+  .q-label {
+    font-size: 0.78rem;
+    color: #c09090;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .q-section {
+    font-size: 0.85rem;
+    color: #d4849a;
+    margin-bottom: 18px;
+    font-weight: 500;
+  }
+  .q-title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #3a2a2e;
+    margin-bottom: 26px;
+    line-height: 1.5;
+  }
+
+  /* Options */
+  .options { width: 100%; display: flex; flex-direction: column; gap: 10px; }
+
+  .opt-btn {
+    background: #fff;
+    border: 1.5px solid #f0c0cc;
+    border-radius: 14px;
+    padding: 14px 20px;
+    font-size: 1rem;
+    font-family: 'Tajawal', sans-serif;
+    color: #3a2a2e;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: right;
+  }
+  .opt-btn:hover, .opt-btn.selected {
+    background: #ffe0e8;
+    border-color: #c0557a;
+    color: #c0557a;
+    font-weight: 600;
+  }
+
+  /* ===== PROGRESS BAR ===== */
+  .progress-wrap {
+    width: 100%;
+    background: #f5dde3;
+    border-radius: 100px;
+    height: 5px;
+    margin-bottom: 28px;
+  }
+  .progress-bar {
+    height: 5px;
+    background: linear-gradient(90deg, #e87fa0, #c0557a);
+    border-radius: 100px;
+    transition: width 0.4s ease;
+  }
+
+  /* ===== BUTTONS ===== */
+  .btn-primary {
+    background: linear-gradient(135deg, #e87fa0, #c0557a);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 15px 44px;
+    font-size: 1.05rem;
+    font-family: 'Tajawal', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(192,85,122,0.3);
+    transition: transform 0.15s, box-shadow 0.15s;
+    margin-top: 8px;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 22px rgba(192,85,122,0.35);
+  }
+  .btn-primary:active { transform: scale(0.97); }
+
+  .btn-back {
+    background: transparent;
+    border: none;
+    color: #c09090;
+    font-size: 0.9rem;
+    font-family: 'Tajawal', sans-serif;
+    cursor: pointer;
+    margin-top: 18px;
+    text-decoration: underline;
+  }
+  .btn-back:hover { color: #c0557a; }
+
+  .btn-secondary {
+    background: transparent;
+    border: 1.5px solid #f0c0cc;
+    border-radius: 50px;
+    padding: 13px 36px;
+    font-size: 0.95rem;
+    font-family: 'Tajawal', sans-serif;
+    color: #c0557a;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 8px;
+  }
+  .btn-secondary:hover { background: #fff0f4; }
+
+  /* ===== SPECIAL MSG (pregnant) ===== */
+  #screen-pregnant h2 { font-size: 1.5rem; color: #c0557a; margin-bottom: 16px; }
+  #screen-pregnant p { font-size: 1rem; line-height: 2; color: #5a3a42; }
+
+  /* ===== CONTACT ===== */
+  #screen-contact .contact-sub {
+    font-size: 0.95rem;
+    color: #b07080;
+    margin-bottom: 24px;
+    line-height: 1.8;
+  }
+  .input-wrap { width: 100%; position: relative; }
+  .input-wrap input {
+    width: 100%;
+    padding: 15px 18px;
+    border: 1.5px solid #f0c0cc;
+    border-radius: 14px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1rem;
+    color: #3a2a2e;
+    background: #fff;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 10px;
+    text-align: right;
+  }
+  .input-wrap input:focus { border-color: #c0557a; }
+  .input-wrap input::placeholder { color: #d4a0ac; }
+  .input-error { color: #e05070; font-size: 0.85rem; margin-top: -6px; margin-bottom: 8px; display: none; }
+
+  /* ===== BUDGET ===== */
+  .budget-note { font-size: 0.82rem; color: #c09090; margin-bottom: 24px; }
+
+  /* ===== SUCCESS ===== */
+  #screen-success h2 { font-size: 1.5rem; color: #c0557a; margin-bottom: 16px; }
+  #screen-success p { font-size: 1rem; line-height: 2; color: #5a3a42; }
+  #screen-success .success-icon { font-size: 3rem; margin-bottom: 16px; }
+
+  /* ===== MOTIVATION ===== */
+  .motivation {
+    background: linear-gradient(135deg, #fff0f4, #ffe8ee);
+    border-radius: 18px;
+    padding: 22px 20px;
+    margin: 20px 0;
+    font-size: 1rem;
+    line-height: 2;
+    color: #5a3a42;
+    border: 1px solid #f5c5d0;
+  }
+  .motivation strong { color: #c0557a; }
+
+  /* ===== COMMIT SCREEN ===== */
+  #screen-commit h2 { font-size: 1.35rem; color: #3a2a2e; margin-bottom: 10px; }
+
+  /* ===== LOADING ===== */
+  #screen-loading h2 { font-size: 1.3rem; color: #c0557a; }
+  .spinner {
+    width: 40px; height: 40px;
+    border: 3px solid #f5dde3;
+    border-top: 3px solid #c0557a;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 20px auto;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
 
-<!-- ════ S0: LANDING ════ -->
-<div class="scr on" id="s0">
-  <span class="rose" style="top:4%;right:2%;font-size:2.5rem;transform:rotate(15deg)">🌸</span>
-  <span class="rose" style="top:7%;left:4%;font-size:2rem;transform:rotate(-20deg)">🌷</span>
-  <span class="rose" style="top:35%;right:1%;font-size:1.5rem;transform:rotate(30deg)">🌺</span>
-  <span class="rose" style="top:40%;left:0%;font-size:1.5rem;transform:rotate(-25deg)">🌸</span>
-  <span class="rose" style="bottom:12%;right:3%;font-size:2rem;transform:rotate(10deg)">🌷</span>
-  <span class="rose" style="bottom:8%;left:2%;font-size:2.5rem;transform:rotate(-15deg)">🌺</span>
-
-  <p class="brand">رامي</p>
-  <p class="brand-sub">Skin Care Specialist</p>
-
-  <div class="imgs-row">
-    <div class="img-ph">🌸</div>
-    <div class="img-ph">🌷</div>
-    <div class="img-ph">🌺</div>
-  </div>
-
-  <p class="welcome-txt">
-    اذا رايدة بشرتج تصير بيها <em>لمعة</em>،<br>
+<!-- ========== SCREEN 1: HOME ========== -->
+<div class="screen active" id="screen-home">
+  <div class="flowers">🌸 🌷 🌺 🌸 🌷 🌺</div>
+  <div class="name">رامي</div>
+  <div class="subtitle">Skin Care Specialist</div>
+  <div class="flower-sm">🌸 🌷 🌺</div>
+  <div class="tagline">
+    اذا رايدة بشرتج تصير بيها <strong>لمعة</strong>،<br>
     تعاي أشخص بشرتج بطريقة بسيطة<br>
     وأضمن بيها تتغير
+  </div>
+  <button class="btn-primary" onclick="go('screen-privacy')">حابة تشخصين بشرتج؟ دوسي هنا 🌸</button>
+  <div class="flower-sm">🌸 🌷</div>
+</div>
+
+<!-- ========== SCREEN 2: PRIVACY ========== -->
+<div class="screen" id="screen-privacy">
+  <div class="lock">🔒</div>
+  <h2>خصوصيتج أمانة عندنا</h2>
+  <p>
+    هاي المعلومات محد يشوفها غير <strong>د. رامي</strong> شخصياً.<br><br>
+    حبيت أطمنج قبل ما تبدين 🌸
   </p>
-
-  <button class="btn-cta" onclick="go('s1')">حابة تشخصين بشرتج؟ دوسي هنا 🌸</button>
+  <div class="flower-sm">🌸 🌷</div>
+  <button class="btn-primary" onclick="go('screen-q1')">تمام، نبدأ ←</button>
+  <button class="btn-back" onclick="go('screen-home')">→ رجوع</button>
 </div>
 
-<!-- ════ S1: PRIVACY ════ -->
-<div class="scr" id="s1">
-  <span class="rose" style="top:5%;right:3%">🌸</span>
-  <span class="rose" style="bottom:8%;left:3%">🌷</span>
-  <div class="box">
-    <div class="lock">🔒</div>
-    <h2 class="priv-title">خصوصيتج أمانة عندنا</h2>
-    <p class="priv-msg">
-      هاي المعلومات محد يشوفها غير <strong>د. رامي</strong> شخصياً.<br><br>
-      حبيت أطمنج قبل ما تبدين 🌸
-    </p>
-    <button class="btn-cta" onclick="go('s2')">تمام، نبدأ ←</button>
-    <button onclick="go('s0b')" style="background:transparent;border:none;font-family:'Tajawal',sans-serif;font-size:13px;color:var(--light);cursor:pointer;margin-top:.75rem;display:block;width:100%">→ رجوع</button>
+<!-- ========== SCREEN Q1: AGE ========== -->
+<div class="screen" id="screen-q1">
+  <div class="progress-wrap"><div class="progress-bar" style="width:14%"></div></div>
+  <div class="q-label">السؤال ١ من ٧</div>
+  <div class="q-section">معلومات عامة</div>
+  <div class="q-title">عمرج؟</div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer('age','أقل من 18 سنة')">أقل من 18 سنة 🌱</button>
+    <button class="opt-btn" onclick="answer('age','18 - 24 سنة')">18 - 24 سنة ✨</button>
+    <button class="opt-btn" onclick="answer('age','25 - 34 سنة')">25 - 34 سنة 🌸</button>
+    <button class="opt-btn" onclick="answer('age','35 سنة وأكثر')">35 سنة وأكثر 🌺</button>
   </div>
+  <button class="btn-back" onclick="go('screen-privacy')">→ رجوع</button>
 </div>
 
-<!-- ════ S2: Q1 — العمر ════ -->
-<div class="scr" id="s2">
-  <div class="qbox">
-    <div class="prog-row">
-      <span class="prog-lbl">السؤال ١ من ٧</span>
-      <div class="prog-bar"><div class="prog-fill" style="width:14%"></div></div>
-    </div>
-    <p class="q-eye">معلومات عامة</p>
-    <h2 class="q-title">عمرج؟</h2>
-    <div class="opts" id="opts2"></div>
-    <div class="nav">
-      <button class="btn-back" onclick="go('s1')">→ رجوع</button>
-      <button class="btn-next" id="nxt2" disabled onclick="go('s3')">التالي</button>
-    </div>
+<!-- ========== SCREEN Q2: ROUTINE ========== -->
+<div class="screen" id="screen-q2">
+  <div class="progress-wrap"><div class="progress-bar" style="width:28%"></div></div>
+  <div class="q-label">السؤال ٢ من ٧</div>
+  <div class="q-section">تجربتج السابقة</div>
+  <div class="q-title">استخدمتِ روتين عناية سابقاً؟</div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer('routine','أي، عندي روتين ثابت')">أي، عندي روتين ثابت 💆‍♀️</button>
+    <button class="opt-btn" onclick="answer('routine','جربت بس ما ثبّتت')">جربت بس ما ثبّتت 😅</button>
+    <button class="opt-btn" onclick="answer('routine','لا، ما جربت قبل')">لا، ما جربت قبل 🌱</button>
   </div>
+  <button class="btn-back" onclick="go('screen-q1')">→ رجوع</button>
 </div>
 
-<!-- ════ S3: Q2 — الروتين ════ -->
-<div class="scr" id="s3">
-  <div class="qbox">
-    <div class="prog-row">
-      <span class="prog-lbl">السؤال ٢ من ٧</span>
-      <div class="prog-bar"><div class="prog-fill" style="width:28%"></div></div>
-    </div>
-    <p class="q-eye">تجربتج السابقة</p>
-    <h2 class="q-title">استخدمتِ روتين عناية سابقاً؟</h2>
-    <div class="opts" id="opts3"></div>
-    <div class="nav">
-      <button class="btn-back" onclick="go('s2')">→ رجوع</button>
-      <button class="btn-next" id="nxt3" disabled onclick="go('s4')">التالي</button>
-    </div>
+<!-- ========== SCREEN Q3: STATUS ========== -->
+<div class="screen" id="screen-q3">
+  <div class="progress-wrap"><div class="progress-bar" style="width:42%"></div></div>
+  <div class="q-label">السؤال ٣ من ٧</div>
+  <div class="q-section">وضعك الحالي</div>
+  <div class="q-title">وضعك الحالي؟</div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer('status','بشرتي جافة')">بشرتي جافة 🌵</button>
+    <button class="opt-btn" onclick="answer('status','بشرتي دهنية')">بشرتي دهنية 💧</button>
+    <button class="opt-btn" onclick="answer('status','بشرتي مختلطة')">بشرتي مختلطة 🌓</button>
+    <button class="opt-btn" onclick="answer('status','بشرتي حساسة')">بشرتي حساسة 🌸</button>
+    <button class="opt-btn" onclick="handlePregnant()">حامل أو مرضعة 🤰</button>
   </div>
+  <button class="btn-back" onclick="go('screen-q2')">→ رجوع</button>
 </div>
 
-<!-- ════ S4: Q3 — الوضع الحالي ════ -->
-<div class="scr" id="s4">
-  <div class="qbox">
-    <div class="prog-row">
-      <span class="prog-lbl">السؤال ٣ من ٧</span>
-      <div class="prog-bar"><div class="prog-fill" style="width:42%"></div></div>
-    </div>
-    <p class="q-eye">وضعك الحالي</p>
-    <h2 class="q-title">وضعك الحالي؟</h2>
-    <div class="opts" id="opts4"></div>
-    <div class="nav">
-      <button class="btn-back" onclick="go('s3')">→ رجوع</button>
-      <button class="btn-next" id="nxt4" disabled onclick="handleStatus()">التالي</button>
-    </div>
-  </div>
+<!-- ========== SCREEN: PREGNANT MSG ========== -->
+<div class="screen" id="screen-pregnant">
+  <div class="flowers">🌸 🌷</div>
+  <div class="flower-sm">🌸</div>
+  <h2>مبروك عليج! 💕</h2>
+  <p>
+    للأسف حالياً ما عندنا منتجات آمنة للحوامل والمرضعات.<br><br>
+    نتمنى نخدمج قريباً بعد انتهاء هذه المرحلة الجميلة 💕
+  </p>
+  <div class="flower-sm">🌸 🌷</div>
+  <button class="btn-primary" onclick="go('screen-home')">← رجوع للبداية</button>
 </div>
 
-<!-- ════ S4B: حامل / مرضع ════ -->
-<div class="scr" id="s4b">
-  <span class="rose" style="top:5%;right:3%">🌸</span>
-  <span class="rose" style="bottom:8%;left:3%">🌷</span>
-  <div class="special-box">
-    <div class="special-emoji">🌸</div>
-    <h2 class="special-title">مبروك عليج!</h2>
-    <p class="special-msg">
-      للأسف حالياً ما عندنا منتجات آمنة للحوامل والمرضعات.<br><br>
-      نتمنى نخدمج قريباً بعد انتهاء هذه المرحلة الجميلة 💕
-    </p>
-    <button class="btn-cta" onclick="go('s0')">← رجوع للبداية</button>
+<!-- ========== SCREEN Q4: ALLERGY ========== -->
+<div class="screen" id="screen-q4">
+  <div class="progress-wrap"><div class="progress-bar" style="width:57%"></div></div>
+  <div class="q-label">السؤال ٤ من ٧</div>
+  <div class="q-section">حساسية</div>
+  <div class="q-title">عندك تحسس من أي منتج أو مكون؟</div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer('allergy','لا، ما عندي تحسس')">لا، ما عندي تحسس ✅</button>
+    <button class="opt-btn" onclick="answer('allergy','أي، عندي تحسس')">أي، عندي تحسس ⚠️</button>
+    <button class="opt-btn" onclick="answer('allergy','مو متأكدة')">مو متأكدة 🤔</button>
   </div>
+  <button class="btn-back" onclick="go('screen-q3')">→ رجوع</button>
 </div>
 
-<!-- ════ S5: Q4 — التحسس ════ -->
-<div class="scr" id="s5">
-  <div class="qbox">
-    <div class="prog-row">
-      <span class="prog-lbl">السؤال ٤ من ٧</span>
-      <div class="prog-bar"><div class="prog-fill" style="width:57%"></div></div>
-    </div>
-    <p class="q-eye">حساسية</p>
-    <h2 class="q-title">عندك تحسس من أي منتج أو مكون؟</h2>
-    <div class="opts" id="opts5"></div>
-    <textarea class="txt-input" id="allergy-txt" rows="3" placeholder="اكتبي اسم المنتج أو المكون..."></textarea>
-    <div class="nav">
-      <button class="btn-back" onclick="go('s4')">→ رجوع</button>
-      <button class="btn-next" id="nxt5" disabled onclick="go('s6')">التالي</button>
-    </div>
+<!-- ========== SCREEN Q5: DIET ========== -->
+<div class="screen" id="screen-q5">
+  <div class="progress-wrap"><div class="progress-bar" style="width:71%"></div></div>
+  <div class="q-label">السؤال ٥ من ٧</div>
+  <div class="q-section">نمط حياتج</div>
+  <div class="q-title">أكلك صحي؟</div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer('diet','أي، أكلي زين شوية')">أي، أكلي زين شوية 🥗</button>
+    <button class="opt-btn" onclick="answer('diet','لا، أكلي مو زين')">لا، أكلي مو زين 🍔</button>
+    <button class="opt-btn" onclick="answer('diet','أحياناً زين وأحياناً لا')">أحياناً زين وأحياناً لا 🤷‍♀️</button>
   </div>
+  <button class="btn-back" onclick="go('screen-q4')">→ رجوع</button>
 </div>
 
-<!-- ════ S6: Q5 — الأكل ════ -->
-<div class="scr" id="s6">
-  <div class="qbox">
-    <div class="prog-row">
-      <span class="prog-lbl">السؤال ٥ من ٧</span>
-      <div class="prog-bar"><div class="prog-fill" style="width:71%"></div></div>
-    </div>
-    <p class="q-eye">نمط حياتج</p>
-    <h2 class="q-title">أكلك صحي؟</h2>
-    <div class="opts" id="opts6"></div>
-    <div class="nav">
-      <button class="btn-back" onclick="go('s5')">→ رجوع</button>
-      <button class="btn-next" id="nxt6" disabled onclick="go('s7')">التالي</button>
-    </div>
+<!-- ========== SCREEN Q6: SLEEP ========== -->
+<div class="screen" id="screen-q6">
+  <div class="progress-wrap"><div class="progress-bar" style="width:85%"></div></div>
+  <div class="q-label">السؤال ٦ من ٧</div>
+  <div class="q-section">نمط حياتج</div>
+  <div class="q-title">نومك؟</div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer('sleep','زين، أنام كافي')">زين، أنام كافي 😴</button>
+    <button class="opt-btn" onclick="answer('sleep','وسط، نومي مو منتظم')">وسط، نومي مو منتظم 😐</button>
+    <button class="opt-btn" onclick="answer('sleep','مو زين، أنام وايد قليل')">مو زين، أنام وايد قليل 😩</button>
   </div>
+  <button class="btn-back" onclick="go('screen-q5')">→ رجوع</button>
 </div>
 
-<!-- ════ S7: Q6 — النوم ════ -->
-<div class="scr" id="s7">
-  <div class="qbox">
-    <div class="prog-row">
-      <span class="prog-lbl">السؤال ٦ من ٧</span>
-      <div class="prog-bar"><div class="prog-fill" style="width:85%"></div></div>
-    </div>
-    <p class="q-eye">نمط حياتج</p>
-    <h2 class="q-title">نومك؟</h2>
-    <div class="opts" id="opts7"></div>
-    <div class="nav">
-      <button class="btn-back" onclick="go('s6')">→ رجوع</button>
-      <button class="btn-next" id="nxt7" disabled onclick="go('s8')">التالي</button>
-    </div>
+<!-- ========== SCREEN Q7: HORMONES ========== -->
+<div class="screen" id="screen-q7">
+  <div class="progress-wrap"><div class="progress-bar" style="width:100%"></div></div>
+  <div class="q-label">السؤال ٧ من ٧</div>
+  <div class="q-section">صحتج</div>
+  <div class="q-title">هرموناتك؟</div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer('hormones','منتظمة، ما عندي مشاكل')">منتظمة، ما عندي مشاكل ✅</button>
+    <button class="opt-btn" onclick="answer('hormones','عندي تقلبات هرمونية')">عندي تقلبات هرمونية 📊</button>
+    <button class="opt-btn" onclick="answer('hormones','عندي مشكلة هرمونية مشخصة')">عندي مشكلة هرمونية مشخصة 🩺</button>
+    <button class="opt-btn" onclick="answer('hormones','مو متأكدة')">مو متأكدة 🤔</button>
   </div>
+  <button class="btn-back" onclick="go('screen-q6')">→ رجوع</button>
 </div>
 
-<!-- ════ S8: Q7 — الهرمونات ════ -->
-<div class="scr" id="s8">
-  <div class="qbox">
-    <div class="prog-row">
-      <span class="prog-lbl">السؤال ٧ من ٧</span>
-      <div class="prog-bar"><div class="prog-fill" style="width:100%"></div></div>
-    </div>
-    <p class="q-eye">صحتج</p>
-    <h2 class="q-title">هرموناتك؟</h2>
-    <div class="opts" id="opts8"></div>
-    <div class="nav">
-      <button class="btn-back" onclick="go('s7')">→ رجوع</button>
-      <button class="btn-next" id="nxt8" disabled onclick="go('s9')">التالي</button>
-    </div>
+<!-- ========== SCREEN: COMMIT ========== -->
+<div class="screen" id="screen-commit">
+  <div class="flowers">🌸 🌷</div>
+  <div class="motivation">
+    علموذ تطمئنين،<br>
+    بشرتج مو بس راح تتغير —<br>
+    <strong>راح تنبهرين بالفرق.</strong><br><br>
+    والحمدلله، أنا <strong>رامي</strong> مو بس أغير بشرة،<br>
+    لا أوفر نظام متكامل يخلي بشرتج<br>
+    بصورة دائمية تتغير 🌸
   </div>
+  <p style="color:#b07080;font-size:0.95rem;margin-bottom:20px;">أدري بيكِ، كلي ثقة 🌸</p>
+  <div class="flowers">🌸 🌷</div>
+  <button class="btn-primary" onclick="go('screen-contact')">أي، متحمسة! 🌸</button>
+  <button class="btn-secondary" onclick="go('screen-contact')">لا، بس أسأل</button>
+  <button class="btn-back" onclick="go('screen-q7')">→ رجوع</button>
 </div>
 
-<!-- ════ S9: رسالة رامي ════ -->
-<div class="scr" id="s9">
-  <span class="rose" style="top:5%;right:2%">🌸</span>
-  <span class="rose" style="bottom:8%;left:3%">🌷</span>
-  <div class="rami-box">
-    <div class="rami-img">🌸</div>
-    <h2 class="rami-title">هسه أنا رامي شخصياً أغير بشرتج وأسوي بيها هاي اللمعة</h2>
-    <div class="rami-btns">
-      <button class="btn-yes" onclick="go('s10')">أي، متحمسة! 🌸</button>
-      <button class="btn-no" onclick="go('s10')">لا، بس أسأل</button>
-    </div>
+<!-- ========== SCREEN: CONTACT ========== -->
+<div class="screen" id="screen-contact">
+  <div class="flower-sm">🌸</div>
+  <div class="q-title">آخر خطوة 🌸</div>
+  <p class="contact-sub">
+    اكتبي يوزرك على انستغرام<br>
+    أو رقمك على واتساب<br>
+    حتى يوصلج رامي شخصياً
+  </p>
+  <div class="input-wrap">
+    <input type="text" id="whatsapp-input" placeholder="رقم الواتساب (مثال: 07701234567)" oninput="clearError('wa-error')" />
+    <div class="input-error" id="wa-error">الرقم لازم يكون بالأرقام الإنجليزية (0-9)</div>
+    <input type="text" id="instagram-input" placeholder="@يوزر الانستغرام" oninput="clearError('ig-error')" />
+    <div class="input-error" id="ig-error">اكتبي رقم واتساب بالأرقام الإنجليزية أو يوزر انستغرام</div>
   </div>
+  <button class="btn-primary" onclick="validateContact()">التالي ←</button>
+  <button class="btn-back" onclick="go('screen-commit')">→ رجوع</button>
 </div>
 
-<!-- ════ S10: الاطمئنان ════ -->
-<div class="scr" id="s10">
-  <span class="rose" style="top:5%;right:3%">🌸</span>
-  <span class="rose" style="bottom:8%;left:2%">🌷</span>
-  <div class="reassure-box">
-    <p class="reassure-txt">
-      علموذ تطمئنين،<br>
-      بشرتج مو بس راح تتغير —<br>
-      <strong>راح تنبهرين بالفرق.</strong><br><br>
-      والحمدلله، أنا <strong>رامي</strong> مو بس أغير بشرة،<br>
-      لا أوفر نظام متكامل يخلي بشرتج<br>
-      بصورة دائمية تتغير 🌸
-    </p>
-    <button class="btn-trust" onclick="go('s0b')">أدري بيكِ، كلي ثقة 🌸</button>
+<!-- ========== SCREEN: BUDGET ========== -->
+<div class="screen" id="screen-budget">
+  <div class="flower-sm">🌸 🌷</div>
+  <div class="q-title">ابدأي رحلتج معنا</div>
+  <div class="q-section">شنو ميزانيتج للعناية ببشرتج؟</div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer('budget','ميزانية محدودة — أسعار تبدأ من 50 💊')">ميزانية محدودة — تبدأ من 50 💊</button>
+    <button class="opt-btn" onclick="answer('budget','ميزانية مريحة — أسعار تبدأ من 300 ✨')">ميزانية مريحة — تبدأ من 300 ✨</button>
   </div>
+  <p class="budget-note" style="margin-top:14px;">الأسعار بالدينار العراقي ألف</p>
+
+  <div style="margin-top:24px;padding-top:20px;border-top:1px dashed #f0c0cc;width:100%">
+    <p style="font-size:0.9rem;color:#c09090;margin-bottom:8px;">الأسعار عادية بالنسبة لج؟</p>
+    <button class="opt-btn" onclick="answer('budget_ok','أي، عادية')">أي، عادية 😊</button>
+    <button class="opt-btn" style="margin-top:8px" onclick="answer('budget_ok','مو عادية')">مو عادية، عندي سبب</button>
+  </div>
+
+  <button class="btn-back" onclick="go('screen-contact')">→ رجوع</button>
 </div>
 
-<!-- ════ S0B: USER INFO ════ -->
-<div class="scr" id="s0b">
-  <span class="rose" style="top:5%;right:3%">🌸</span>
-  <span class="rose" style="bottom:8%;left:3%">🌷</span>
-  <div class="box">
-    <div class="lock">🌸</div>
-    <h2 class="priv-title">آخر خطوة 🌸</h2>
-    <p class="priv-msg">اكتبي يوزرك على انستغرام<br>أو رقمك على واتساب<br>حتى يوصلج رامي شخصياً</p>
-    <input type="text" id="user-input" placeholder="@username أو 07XXXXXXXXX" style="width:100%;border:1.5px solid var(--pink2);border-radius:14px;padding:14px 16px;font-family:'Tajawal',sans-serif;font-size:15px;color:var(--txt);background:var(--offwhite);outline:none;transition:border .2s;text-align:center;margin-bottom:1.25rem;direction:ltr" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--pink2)'" oninput="document.getElementById('btn-info').disabled=this.value.trim()===''">
-    <button class="btn-cta" id="btn-info" disabled onclick="sendToFormspree()" style="opacity:1">التالي ←</button>
-  </div>
+<!-- ========== SCREEN: LOADING ========== -->
+<div class="screen" id="screen-loading">
+  <div class="spinner"></div>
+  <h2>رامي راح يوصلج قريباً 🌸</h2>
 </div>
 
-<!-- ════ S11: PRICING ════ -->
-<!-- ════ S11: الأسعار ════ -->
-<div class="scr" id="s11">
-  <span class="rose" style="top:3%;right:2%;font-size:1.5rem">🌸</span>
-  <span class="rose" style="top:5%;left:2%;font-size:1.5rem">🌷</span>
-  <div class="price-box">
-    <div class="price-header">
-      <h2 class="price-title">ابدأي رحلتج معنا</h2>
-      <p class="price-sub">شو ميزانيتج للعناية ببشرتج؟</p>
-    </div>
-
-    <div class="norm-opts" style="margin-bottom:1.25rem">
-      <button class="opt" id="budget-low" onclick="selectBudget('low')">
-        <span>أسعار المنتجات تبدأ من ٥٠ 💊</span><span class="chk" id="chk-low"></span>
-      </button>
-      <button class="opt" id="budget-high" onclick="selectBudget('high')">
-        <span>أسعار المنتجات تبدأ من ٣٠٠ ✨</span><span class="chk" id="chk-high"></span>
-      </button>
-    </div>
-
-    <h3 class="q-norm">الأسعار عادية بالنسبة لج؟</h3>
-    <div class="norm-opts">
-      <button class="opt" id="opt-yes" onclick="selectNormal('yes')">
-        <span>أي، عادية 😊</span><span class="chk" id="chk-yes"></span>
-      </button>
-      <button class="opt" id="opt-no" onclick="selectNormal('no')">
-        <span>مو عادية، عندي سبب</span><span class="chk" id="chk-no"></span>
-      </button>
-    </div>
-    <textarea class="txt-input" id="reason-txt" rows="3" placeholder="اكتبي سببج هنا..."></textarea>
-
-    <p style="text-align:center;font-size:13px;color:var(--muted);margin-bottom:.75rem;font-weight:300">اذا عندج أي مشكلة تواصلي على هذا الرقم: <a href="tel:07705554457" style="color:var(--red);font-weight:500">07705554457</a></p>
-    <button class="btn-wa" id="btn-wa" onclick="showConfirm()">
-      هسه رامي راح يتواصل وياج 🌸
-    </button>
-
-    </div>
-  </div>
-</div>
-  </div>
+<!-- ========== SCREEN: SUCCESS ========== -->
+<div class="screen" id="screen-success">
+  <div class="success-icon">🌸</div>
+  <h2>وصلت معلوماتج!</h2>
+  <p>
+    هسه رامي راح يتواصل وياج<br>
+    وما يطول الوقت 🌸
+  </p>
+  <div class="flower-sm">🌸 🌷 🌺</div>
+  <p style="font-size:0.85rem;color:#c09090;margin-top:16px;">
+    إذا عندج أي مشكلة تواصلي على:<br>
+    <a href="tel:07705554457" style="color:#c0557a;">07705554457</a>
+  </p>
 </div>
 
 <script>
-// ── DATA COLLECTION ──
-var quizData = {};
+// ===== CONFIG =====
+const BOT_TOKEN = "8801498124:AAFFCexnKgBN1G8YqsZi7wJpa6iFb3CPa68";
+const CHAT_ID   = "995680848";
 
-function saveAnswer(key, value){
-  quizData[key] = value;
+// ===== STATE =====
+const answers = {};
+
+// ===== NAVIGATION =====
+function go(screenId) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(screenId).classList.add('active');
+  window.scrollTo(0,0);
 }
 
-function getContactLink(val){
-  val = val.trim();
-  if(val.startsWith('@')){
-    return 'https://instagram.com/' + val.replace('@','');
-  } else {
-    var num = val.replace(/^0/, '964');
-    return 'https://wa.me/' + num.replace(/[^0-9]/g,'');
+// ===== ANSWER & AUTO-ADVANCE =====
+function answer(key, value) {
+  answers[key] = value;
+
+  const flow = {
+    age:      'screen-q2',
+    routine:  'screen-q3',
+    status:   'screen-q4',
+    allergy:  'screen-q5',
+    diet:     'screen-q6',
+    sleep:    'screen-q7',
+    hormones: 'screen-commit',
+    budget:   null, // wait for budget_ok
+    budget_ok: null  // triggers send
+  };
+
+  if (key === 'budget_ok') {
+    sendToTelegram();
+    return;
   }
+
+  if (flow[key]) go(flow[key]);
 }
 
-// ── navigation ──
-function go(id){
-  document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
-  const el=document.getElementById(id);
-  void el.offsetWidth;
-  el.classList.add('on');
-  window.scrollTo({top:0,behavior:'smooth'});
+// ===== PREGNANT SPECIAL =====
+function handlePregnant() {
+  answers['status'] = 'حامل أو مرضعة';
+  go('screen-pregnant');
 }
 
-// ── build options helper ──
-const qKeys={2:'العمر',3:'الروتين_السابق',5:'التحسس',6:'الأكل',7:'النوم',8:'الهرمونات'};
-function buildOpts(num, options){
-  const el=document.getElementById('opts'+num);
-  const nxt=document.getElementById('nxt'+num);
-  el.innerHTML='';
-  options.forEach((o,i)=>{
-    const b=document.createElement('button');
-    b.className='opt';
-    b.innerHTML=`<span>${o}</span><span class="chk"></span>`;
-    b.onclick=()=>{
-      el.querySelectorAll('.opt').forEach((x,j)=>{
-        const c=x.querySelector('.chk');
-        if(j===i){x.classList.add('sel');c.textContent='✓';}
-        else{x.classList.remove('sel');c.textContent='';}
-      });
-      if(nxt) nxt.disabled=false;
-      if(qKeys[num]) saveAnswer(qKeys[num], o);
-    };
-    el.appendChild(b);
-  });
+// ===== CONTACT VALIDATION =====
+function clearError(id) {
+  document.getElementById(id).style.display = 'none';
 }
 
-// ── Q4: status ──
-let statusVal='';
-function buildStatus(){
-  const el=document.getElementById('opts4');
-  const nxt=document.getElementById('nxt4');
-  ['ما متزوجة','متزوجة','حامل','مرضع','ناوية على حمل خلال ٦ أشهر'].forEach((o,i)=>{
-    const b=document.createElement('button');
-    b.className='opt';
-    b.innerHTML=`<span>${o}</span><span class="chk"></span>`;
-    b.onclick=()=>{
-      statusVal=o; saveAnswer('الوضع_الحالي', o);
-      el.querySelectorAll('.opt').forEach((x,j)=>{
-        const c=x.querySelector('.chk');
-        if(j===i){x.classList.add('sel');c.textContent='✓';}
-        else{x.classList.remove('sel');c.textContent='';}
-      });
-      nxt.disabled=false;
-    };
-    el.appendChild(b);
-  });
-}
-function handleStatus(){
-  if(statusVal==='حامل'||statusVal==='مرضع') go('s4b');
-  else go('s5');
-}
+function validateContact() {
+  const wa  = document.getElementById('whatsapp-input').value.trim();
+  const ig  = document.getElementById('instagram-input').value.trim();
 
-// ── Q5: allergy ──
-function buildAllergy(){
-  const el=document.getElementById('opts5');
-  const nxt=document.getElementById('nxt5');
-  const box=document.getElementById('allergy-txt');
-  ['لا','أي'].forEach((o,i)=>{
-    const b=document.createElement('button');
-    b.className='opt';
-    b.innerHTML=`<span>${o}</span><span class="chk"></span>`;
-    b.onclick=()=>{
-      el.querySelectorAll('.opt').forEach((x,j)=>{
-        const c=x.querySelector('.chk');
-        if(j===i){x.classList.add('sel');c.textContent='✓';}
-        else{x.classList.remove('sel');c.textContent='';}
-      });
-      box.classList.toggle('show', o==='أي'); saveAnswer('تحسس', o);
-      nxt.disabled=false;
-    };
-    el.appendChild(b);
-  });
-}
+  // WhatsApp: must be English digits only (0-9), ignore if Arabic digits
+  const hasArabicDigits = /[٠-٩]/.test(wa);
+  const isValidWA = wa !== '' && !hasArabicDigits && /^[0-9+\s\-()]+$/.test(wa);
 
-// ── pricing ──
-function selectNormal(v){
-  const oY=document.getElementById('opt-yes');
-  const oN=document.getElementById('opt-no');
-  const cY=document.getElementById('chk-yes');
-  const cN=document.getElementById('chk-no');
-  const reason=document.getElementById('reason-txt');
-  const wa=document.getElementById('btn-wa');
-  saveAnswer('الأسعار_عادية', v==='yes'?'نعم':'لا - عندها سبب'); if(v==='yes'){
-    oY.classList.add('sel'); oN.classList.remove('sel');
-    cY.textContent='✓'; cN.textContent='';
-    reason.classList.remove('show');
-  } else {
-    oN.classList.add('sel'); oY.classList.remove('sel');
-    cN.textContent='✓'; cY.textContent='';
-    reason.classList.add('show');
+  // If WhatsApp written with Arabic digits → ignore completely
+  if (wa !== '' && hasArabicDigits) {
+    document.getElementById('wa-error').textContent = 'الرقم لازم يكون بالأرقام الإنجليزية (0-9) — تم تجاهله';
+    document.getElementById('wa-error').style.display = 'block';
+    // treat as not entered
+    answers['contact'] = '';
   }
-  wa.style.display='block';
-}
 
-function openWA(){
-  // ← ضع رقم واتساب هنا
-  window.open('https://wa.me/9647800000000','_blank');
-}
-
-// ── CONFIRM ──
-function showConfirm(){
-  const btn = document.getElementById('btn-wa');
-  btn.textContent = '✅ تم! رامي راح يتواصل وياج قريباً 🌸';
-  btn.style.background = '#2d7a4f';
-  btn.disabled = true;
-}
-
-// ── BUDGET ──
-function selectBudget(v){
-  const bL=document.getElementById('budget-low');
-  const bH=document.getElementById('budget-high');
-  const cL=document.getElementById('chk-low');
-  const cH=document.getElementById('chk-high');
-  saveAnswer('الميزانية', v==='low'?'تبدأ من ٥٠':'تبدأ من ٣٠٠'); if(v==='low'){
-    bL.classList.add('sel');bH.classList.remove('sel');
-    cL.textContent='✓';cH.textContent='';
-  } else {
-    bH.classList.add('sel');bL.classList.remove('sel');
-    cH.textContent='✓';cL.textContent='';
+  if (isValidWA) {
+    // Format WhatsApp nicely
+    let num = wa.replace(/\s/g,'');
+    if (num.startsWith('07')) num = '+964' + num.substring(1);
+    answers['contact'] = '📱 واتساب: ' + num;
+    go('screen-budget');
+    return;
   }
+
+  // Fallback to Instagram
+  if (ig !== '') {
+    let username = ig.trim();
+    if (!username.startsWith('@')) username = '@' + username;
+    // Remove spaces from username
+    username = username.replace(/\s+/g,'');
+    answers['contact'] = '📸 انستغرام: ' + username;
+    go('screen-budget');
+    return;
+  }
+
+  // Neither valid
+  document.getElementById('ig-error').textContent = 'اكتبي رقم واتساب بالأرقام الإنجليزية أو يوزر انستغرام';
+  document.getElementById('ig-error').style.display = 'block';
 }
 
-// ── FORMSPREE ──
-async function sendToFormspree(){
-  const val = document.getElementById('user-input').value.trim();
-  if(!val) return;
-  const btn = document.getElementById('btn-info');
-  btn.textContent = 'جاري الحفظ...';
-  btn.disabled = true;
-  const link = getContactLink(val);
-  saveAnswer('معلومات_التواصل', val);
-  saveAnswer('رابط_التواصل', link);
-  saveAnswer('الوقت', new Date().toLocaleString('ar-IQ'));
+// ===== SEND TO TELEGRAM =====
+async function sendToTelegram() {
+  go('screen-loading');
 
-  const TOKEN = '8803647037:AAEsv-iLkbd1AuZ2ud4XUK40kCX6GaKU-RA';
-  const CHAT_ID = '995680848';
-  const msg = '🌸 زبونة جديدة!\n\n'
-    + '📱 التواصل: ' + val + '\n'
-    + '🔗 الرابط: ' + link + '\n'
-    + '🎂 العمر: ' + (quizData['العمر']||'-') + '\n'
-    + '💆 الروتين: ' + (quizData['الروتين_السابق']||'-') + '\n'
-    + '👰 الوضع: ' + (quizData['الوضع_الحالي']||'-') + '\n'
-    + '⚠️ تحسس: ' + (quizData['تحسس']||'-') + '\n'
-    + '🥗 الأكل: ' + (quizData['الأكل']||'-') + '\n'
-    + '😴 النوم: ' + (quizData['النوم']||'-') + '\n'
-    + '🧬 الهرمونات: ' + (quizData['الهرمونات']||'-') + '\n'
-    + '💰 الميزانية: ' + (quizData['الميزانية']||'-');
+  // Build message — ONLY two sections: Data + Budget
+  const msg =
+`🌸 استشارة جديدة 🌸
+${'─'.repeat(28)}
+
+📋 الداتا:
+• العمر: ${answers.age || '—'}
+• روتين سابق: ${answers.routine || '—'}
+• نوع البشرة: ${answers.status || '—'}
+• تحسس: ${answers.allergy || '—'}
+• الأكل: ${answers.diet || '—'}
+• النوم: ${answers.sleep || '—'}
+• الهرمونات: ${answers.hormones || '—'}
+• ${answers.contact || 'ما دخلت بيانات التواصل'}
+
+${'─'.repeat(28)}
+💰 الميزانية:
+• ${answers.budget || '—'}
+• الرأي: ${answers.budget_ok || '—'}`;
 
   try {
-    await fetch('https://api.telegram.org/bot' + TOKEN + '/sendMessage', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({chat_id: CHAT_ID, text: msg})
-    });
-  } catch(e) {}
-
-  try {
-    await fetch('https://formspree.io/f/mnjradak', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
-      body: JSON.stringify({
-        ...quizData,
-        '_subject': 'زبونة جديدة 🌸 — ' + val
-      })
-    });
-  } catch(e) {}
-  go('s11');
+    const res = await fetch(
+      `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: CHAT_ID,
+          text: msg
+        })
+      }
+    );
+    // Show success regardless (graceful)
+    go('screen-success');
+  } catch(e) {
+    go('screen-success');
+  }
 }
-
-// ── INIT ──
-buildOpts(2,['من ١٧ إلى ٢٥','من ٢٥ إلى ٣٠','من ٣٠ إلى ٥٠']);
-buildOpts(3,['لا، ما استخدمت','أي، وشفت فرق','أي، بس ما شفت فرق']);
-buildStatus();
-buildAllergy();
-buildOpts(6,['أي، منتظم ✓','لا، مو منتظم']);
-buildOpts(7,['طبيعي ومنتظم','نص ونص','مو زين']);
-buildOpts(8,['طبيعية','متخربطة']);
 </script>
 </body>
 </html>
